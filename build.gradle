@@ -28,3 +28,5 @@ task build(type: Docker, dependsOn: ['copyFiles']) {
 task clean {
     delete "${project.buildDir}"
 }
+
+task assemble {}
