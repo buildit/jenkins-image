@@ -1,0 +1,30 @@
+apply plugin: 'docker'
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'se.transmode.gradle:gradle-docker:1.2'
+    }
+}
+
+task copyFiles(type: Copy) {
+    from "."
+    into "${project.buildDir}/docker"
+    include "gradle.properties"
+    include "start.sh"
+    rename { String fileName ->
+        fileName.replace("gradle", "build")
+    }
+}
+
+task build(type: Docker, dependsOn: ['copyFiles']) {
+    push = project.hasProperty('dockerPush') ? project.property('dockerPush') : false
+    applicationName = "${imageName}"
+    dockerfile = file('Dockerfile')
+}
+
+task clean {
+    delete "${project.buildDir}"
+}

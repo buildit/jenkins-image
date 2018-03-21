@@ -1,0 +1,30 @@
+sudo: required
+language: minimal
+services:
+  - docker
+env:
+  global:
+  - GIT_USERNAME=Travis CI
+  - GIT_EMAIL=builds@travis-ci.com
+  - TAG=$(./pipeline.sh getProperty version gradle.properties)
+  - LAST_COMMIT_MESSAGE=$(git log -1 --pretty=%B | tr -d '\n')
+  - CD_COMMIT_MESSAGE='[travis] Bump version number'
+  - GITHUB_USER=dermotmburke
+  - DOCKER_USERNAME=buildittravis
+  - secure: XV/pfPQ/Gj7Sc16FIvxT5exv3n9lJJnG9pVVzcjsfNB4LPfTNs+uu7HEjBIhJPU/zhEQPF0P4XlU5Zn+SLK9Tzy4kE3sZLBIKziuYaCzYY5cyVX5rfpnpug+pEhQ3e3agA2OdX04IF3zxBI4MqbRLP+X4zz2vNuooAv1CH02dvhRchi2UkwWerVzg/1KkX3hBA+QJ5/0wo08P6loxCa3BkvW+mFjurdh0PkjHANGQt1yd8ZQIro4E+XlzaFzyp/cGdyzWhg8Qgjnct91LD4MW1mEZ++zCnJrI89pRwpnnh/p4uani50U9hb/KhO6n6zi7bKwZMoQd3frKMV/Jsy7gHTvfPgbGi4kepLiDtlqCnQVQ+qo10eoiNcR8kzWsoJNbfTDgKvDIH6OqqNbQ8Bi8W/YChOZvpGPuzU0AE8OMNqS0OJrq78ab/z4SOoGxKcpncm+QJiC0a6EHcTHkzWO54/7CiJW8RigIVHhND/Lpk9KM56dqjw4ygsbygnwxp5inndHmx2zmXeylA9bbEHN1CPv2CuNpDE1pxCe4oA+gOPPxsu7KAS9N4R4UZFVIHUmzUvRnj4O42BoF7r2r+dCHdvpeOKzUA9fokQrlEHv6I8E0W26bPReL6KjVBDEn38YZFzFMusHGReGLKUJfK5EDRaqkpQPUODrAaNQOna0EP0=
+  - secure: R8sCsi1q5XDSrw5mRVwKb03amywj8Aqh4PXIRB5NypMK9BGVB2BuJFs16tQ+3sFrKMz1jtjBQ/1pUVeqPIF/VxSFJ7UNDHKgA+BrRl5NXZX99C1e8pgdNqIp4pXl0eGmSQ6zzWfxmz5S1JQfadpgCav01HMIjFgq1WXvsDuuvNRo0nW09HzGwFmWhiSDHcA9JV0bwv+TmNVphFQqDhSG1HSzt8enOmRFRpnZvfazV1qxGuW4lELA5N1CydfwbqY2rLf1jTvdjn1xNdgEOq/Dpp3Pkqku2MbYldM/An49VW0OAZe4oP/wwxVTVnwmTb2RbInaN4jaGw9pQvnJfx2XnjOREJ+J7QVP7uTZughfRbKkfOM28OLrV9gWQL7x+PtMqs/bWIznDKOZOwpxQmjREoVyInoUUTezhcgjll5iZjoeAzPjr0S+rQH6HbmZnk/H1YKM4IQr7x4O9IiQoBHLJgAsUNQ9k1dQeADP6bwOqAICrXWvdn2eyM/o7LYiQvZTpeZEc9mwgmQeOZVpAMusgevYZRErLIbKLb/TzcnP/DkHVJk/ekwg4uF69GpQDqfU2tGIUzsv6uCRkD+L28ttbOQtva6Mys5aAWe6F54LoUfkRomKQsX7cim/D6CmGPREEmrwdOw/3nA649qoedp/3Yt1BS3xOfhZGLGRx5Qgc9Q=
+script:
+- ./pipeline.sh build
+before_deploy:
+- ./pipeline.sh tag
+- ./pipeline.sh dockerLogin
+deploy:
+  - provider: script
+    script: gradle build -PdockerPush=true
+    skip_cleanup: true
+    on:
+      branch: master
+      tags: false
+      condition: '"${LAST_COMMIT_MESSAGE}" != "${CD_COMMIT_MESSAGE}"'
+after_deploy:
+- ./pipeline.sh bump
