@@ -13,7 +13,7 @@ ARG jenkins_runner_version=1.0.0
 ARG repository=https://dl.bintray.com/buildit/maven
 
 # Add build.properties file
-ADD build.properties .
+ADD gradle.properties build.properties
 
 # Jenkins is run with user `jenkins`, uid = 1000
 # If you bind mount a volume from the host or a data container,

@@ -14,9 +14,6 @@ task copyFiles(type: Copy) {
     into "${project.buildDir}/docker"
     include "gradle.properties"
     include "start.sh"
-    rename { String fileName ->
-        fileName.replace("gradle", "build")
-    }
 }
 
 task build(type: Docker, dependsOn: ['copyFiles']) {
