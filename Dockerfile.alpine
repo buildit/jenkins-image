@@ -46,6 +46,7 @@ RUN apk update && apk add \
     ca-certificates \
     curl \
     bash \
+    ttf-dejavu \
   && rm -rf /var/cache/apk/* \
   && curl -SLO -k ${repository}/com/buildit/jenkins/jenkins-startup-scripts-runner/${jenkins_runner_version}/jenkins-startup-scripts-runner-${jenkins_runner_version}.zip \
   && mkdir ${jenkins_home}/init.groovy.d \
