@@ -27,20 +27,19 @@ RUN chown -R ${user} ${jenkins_home}
 ENV JENKINS_FETCHER_HOME ${jenkins_fetcher_home}
 RUN mkdir ${jenkins_fetcher_home} && chown -R ${user} ${jenkins_fetcher_home}
 
-RUN echo "root:root" | chpasswd && passwd -u root
-
 USER root
 
 RUN apt-get update && apt-get install -y \
     git \
-    sudo \
     vim \
+    sudo \
     nano \
     net-tools \
     ca-certificates \
-    systemd \
-    curl
-
+    curl \
+    && rm -rf /var/lib/apt/lists/* \
+    && echo "${user} ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+    
 # Download the jenkins-startup-scripts-runner
 RUN curl -SLO -k ${repository}/com/buildit/jenkins/jenkins-startup-scripts-runner/${jenkins_runner_version}/jenkins-startup-scripts-runner-${jenkins_runner_version}.zip \
   && mkdir ${jenkins_home}/init.groovy.d \
