@@ -16,14 +16,26 @@ task copyFiles(type: Copy) {
     include "start.sh"
 }
 
-task build(type: Docker, dependsOn: ['copyFiles']) {
+task buildStandard(type: Docker, dependsOn: ['copyFiles']) {
     push = project.hasProperty('dockerPush') ? project.property('dockerPush') : false
     applicationName = "${imageName}"
+    tagVersion = "${project.version}"
     dockerfile = file('Dockerfile')
+}
+
+task buildAlpine(type: Docker, dependsOn: ['copyFiles']) {
+    push = project.hasProperty('dockerPush') ? project.property('dockerPush') : false
+    applicationName = "${imageName}"
+    tagVersion = "${project.version}-alpine"
+    dockerfile = file('Dockerfile.alpine')
 }
 
 task clean {
     delete "${project.buildDir}"
 }
 
+task build {}
+
 task assemble {}
+
+build.dependsOn dependsOn: ['buildStandard', 'buildAlpine']
