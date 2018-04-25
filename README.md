@@ -23,3 +23,12 @@ Once its up and running visit [http://localhost:8080/](http://localhost:8080/) t
 4. The runner again uses the [Jenkins Config Fetcher](https://github.com/buildit/jenkins-config-fetcher) to get the config to determine which [Jenkins Startup Scripts](https://github.com/buildit/jenkins-startup-scripts) archive to download and run.
 5. Once downloaded, the archive is unpacked and executed by kicking of the main method of the main.groovy file located in the root of the exploded archive.
 6. The main method loops round the list of scripts it has in its configuration, executing each one for which it has a corresponding config section available (e.g. the mail.groovy file is only executed if “config?.mail” evaluates to a non null value).
+
+## Links
+
+* Jenkins Startup Scripts - https://github.com/buildit/jenkins-startup-scripts
+* Jenkins Startup Scripts Runner - https://github.com/buildit/jenkins-startup-scripts-runner
+* Jenkins Fetcher - https://github.com/buildit/jenkins-fetcher
+* Jenkins Config Fetcher - https://github.com/buildit/jenkins-config-fetcher
+* Encryptor - https://github.com/buildit/encryptor
+* Encryptor API - https://github.com/buildit/encryptor-api
