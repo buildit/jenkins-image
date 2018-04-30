@@ -8,8 +8,8 @@ ARG http_port=8080
 ARG agent_port=50000
 ARG jenkins_home=/var/jenkins
 ARG jenkins_fetcher_home=/var/jenkins-fetcher
-ARG jenkins_fetcher_version=2.0.0
-ARG jenkins_runner_version=2.0.0
+ARG jenkins_fetcher_version=2.1.0
+ARG jenkins_runner_version=2.1.0
 ARG repository=https://dl.bintray.com/buildit/maven
 
 # Add build.properties file
