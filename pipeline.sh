@@ -14,7 +14,7 @@ deploy() {
 bump() {
     setUpGit
     git checkout master
-    setProperty version $(incrementVersion -p $(getProperty version gradle.properties)) gradle.properties
+    setProperty version $(incrementVersion -m $(getProperty version gradle.properties)) gradle.properties
     git add gradle.properties
     git commit -m "$CD_COMMIT_MESSAGE"
     git push https://$GITHUB_USER:$GITHUB_TOKEN@github.com/$TRAVIS_REPO_SLUG master
