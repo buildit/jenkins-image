@@ -11,7 +11,7 @@ This repostory builds an image containing the Buildit [Jenkins Fetcher](https://
 A sample Jenkins image can be launched by running the following command 
 
 ```
-docker run -it -e JENKINS_CONFIG_FILE=https://github.com/buildit/jenkins-config.git -e JENKINS_STARTUP_SECRET=43bc78d572aaa2df61e5cdb5b3725203 -p 8080:8080 builditdigital/jenkins-image:2.1.0-alpine
+docker run -it -e JENKINS_CONFIG_FILE=https://github.com/buildit/jenkins-config.git -e JENKINS_STARTUP_SECRET=43bc78d572aaa2df61e5cdb5b3725203 -e JAVA_OPTS=-Djenkins.install.runSetupWizard=false -p 8080:8080 builditdigital/jenkins-image:2.1.0-alpine
 ```
 Once its up and running visit [http://localhost:8080/](http://localhost:8080/) to see the Jenkins UI.
 
