@@ -30,5 +30,6 @@ Once its up and running visit [http://localhost:8080/](http://localhost:8080/) t
 * Jenkins Startup Scripts Runner - https://github.com/buildit/jenkins-startup-scripts-runner
 * Jenkins Fetcher - https://github.com/buildit/jenkins-fetcher
 * Jenkins Config Fetcher - https://github.com/buildit/jenkins-config-fetcher
+* Local Docker Runner - https://github.com/buildit/jenkins-startup-scripts-local-docker-runner
 * Encryptor - https://github.com/buildit/encryptor
 * Encryptor API - https://github.com/buildit/encryptor-api
